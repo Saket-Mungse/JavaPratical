@@ -1,0 +1,227 @@
+import java.util.*;
+class PraticalJava4 {
+    public static void main(String[] args){
+        PraticalJava4 object = new PraticalJava4();
+
+        // Decimal inputs
+        String binary1 = object.toXXString("10", "B");
+        String octal1 = object.toXXString("10", "O");
+        String hexadecimal1 = object.toXXString("10", "H");
+
+        // Binary inputs
+        String decimal1 = object.toXXString("0b1001", "D");
+        String octal2 = object.toXXString("0b1001", "O");
+        String hexadecimal2 = object.toXXString("0b1001", "H");
+
+        // Octal inputs
+        String binary2 = object.toXXString("0101", "B");
+        String decimal2 = object.toXXString("0101", "D");
+        String hexadecimal3 = object.toXXString("0101", "H");
+
+        // Hexadecimal inputs
+        String binary3 = object.toXXString("0x1010", "B");
+        String octal3 = object.toXXString("0x1010", "O");
+        String decimal3 = object.toXXString("0x1010", "D");
+
+        System.out.println("Decimal to Binary: " + binary1);
+        System.out.println("Decimal to Octal: " + octal1);
+        System.out.println("Decimal to Hexadecimal: " + hexadecimal1);
+
+        System.out.println("Binary to Decimal: " + decimal1);
+        System.out.println("Binary to Octal: " + octal2);
+        System.out.println("Binary to Hexadecimal: " + hexadecimal2);
+
+        System.out.println("Octal to Binary: " + binary2);
+        System.out.println("Octal to Decimal: " + decimal2);
+        System.out.println("Octal to Hexadecimal: " + hexadecimal3);
+
+        System.out.println("Hexadecimal to Binary: " + binary3);
+        System.out.println("Hexadecimal to Octal: " + octal3);
+        System.out.println("Hexadecimal to Decimal: " + decimal3);
+    }
+
+    String toXXString(String numberStr, String XX){
+        if(numberStr.charAt(0) == '0' && (numberStr.charAt(1) == 'B' || numberStr.charAt(1) == 'b')) {
+            numberStr = numberStr.substring(2);
+            int number = binaryToDecimal(numberStr);
+            if(XX.equalsIgnoreCase("D")){
+                return Integer.toString(number);
+            }
+            if(XX.equalsIgnoreCase("B")){
+                return decimalToBinary(number);
+            }
+            if(XX.equalsIgnoreCase("O")){
+                return decimalToOctal(number);
+            }
+            if(XX.equalsIgnoreCase("H")){
+                return decimalToHexaDecimal(number);
+            }
+        }
+        if(numberStr.charAt(0) == '0' && (numberStr.charAt(1) == 'X' || numberStr.charAt(1) == 'x')) {
+            numberStr = numberStr.substring(2);
+            int number = hexToDecimal(numberStr);
+            if(XX.equalsIgnoreCase("D")){
+                return Integer.toString(number);
+            }
+            if(XX.equalsIgnoreCase("B")){
+                return decimalToBinary(number);
+            }
+            if(XX.equalsIgnoreCase("O")){
+                return decimalToOctal(number);
+            }
+            if(XX.equalsIgnoreCase("H")){
+                return decimalToHexaDecimal(number);
+            }
+        }
+        if(numberStr.charAt(0) == '0') {
+            numberStr = numberStr.substring(1);
+            int number = octalToDecimal(numberStr);
+            if(XX.equalsIgnoreCase("D")){
+                return Integer.toString(number);
+            }
+            if(XX.equalsIgnoreCase("B")){
+                return decimalToBinary(number);
+            }
+            if(XX.equalsIgnoreCase("O")){
+                return decimalToOctal(number);
+            }
+            if(XX.equalsIgnoreCase("H")){
+                return decimalToHexaDecimal(number);
+            }
+        }
+
+        // Convert the string to an integer
+        int number = 0;
+        for(int i = 0; i < numberStr.length(); i++){
+            number = number * 10 + (numberStr.charAt(i) - '0');
+        }
+        if(XX.equalsIgnoreCase("B")){
+            return decimalToBinary(number);
+        }
+        if(XX.equalsIgnoreCase("O")){
+            return decimalToOctal(number);
+        }
+        if(XX.equalsIgnoreCase("H")){
+            return decimalToHexaDecimal(number);
+        }
+        return "Invalid format specifier";
+    }
+
+    int binaryToDecimal(String numberStr){
+        int number = 0;
+        for(int i = 0; i < numberStr.length(); i++){
+            number = number * 2 + (numberStr.charAt(i) - '0');
+        }
+        return number;
+    }
+
+    int hexToDecimal(String numberStr){
+        int number = 0;
+        for(int i = 0; i < numberStr.length(); i++){
+            char hexChar = numberStr.charAt(i);
+            if(hexChar >= '0' && hexChar <= '9'){
+                number = number * 16 + (hexChar - '0');
+            } else if(hexChar >= 'A' && hexChar <= 'F'){
+                number = number * 16 + (hexChar - 'A' + 10);
+            } else if(hexChar >= 'a' && hexChar <= 'f'){
+                number = number * 16 + (hexChar - 'a' + 10);
+            }
+        }
+        return number;
+    }
+
+    int octalToDecimal(String numberStr){
+        int number = 0;
+        for(int i = 0; i < numberStr.length(); i++){
+            number = number * 8 + (numberStr.charAt(i) - '0');
+        }
+        return number;
+    }
+
+    String decimalToBinary(int number){
+        int[] binaryNumber = new int[32];
+        int i = 0;
+        while(number > 0){
+            binaryNumber[i] = number % 2;
+            number = number / 2;
+            i++;
+        }
+
+        String result = "";
+        for(int j = i-1; j >= 0; j--){
+            result += binaryNumber[j];
+        }
+
+        return "0b" + result;
+    }
+
+    String decimalToOctal(int number){
+        int[] octalNumber = new int[32];
+        int i = 0;
+        while(number > 0){
+            octalNumber[i] = number % 8;
+            number = number / 8;
+            i++;
+        }
+
+        String result = "";
+        for(int j = i-1; j >= 0; j--){
+            result += octalNumber[j];
+        }
+
+        return "0" + result;
+    }
+
+    String decimalToHexaDecimal(int number){
+        char[] hexChars = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+        char[] hexNumber = new char[32];
+        int i = 0;
+        while(number > 0){
+            hexNumber[i] = hexChars[number % 16];
+            number = number / 16;
+            i++;
+        }
+
+        String result = "";
+        for(int j = i-1; j >= 0; j--){
+            result += hexNumber[j];
+        }
+
+        return "0x" + result;
+    }
+
+    String binaryToOctal(String binaryStr){
+        int decimal = binaryToDecimal(binaryStr);
+        return decimalToOctal(decimal);
+    }
+
+    String binaryToHexadecimal(String binaryStr){
+        int decimal = binaryToDecimal(binaryStr);
+        return decimalToHexaDecimal(decimal);
+    }
+
+    String octalToBinary(String octalStr){
+        int decimal = octalToDecimal(octalStr);
+        return decimalToBinary(decimal);
+    }
+
+    String octalToHexadecimal(String octalStr){
+        int decimal = octalToDecimal(octalStr);
+        return decimalToHexaDecimal(decimal);
+    }
+
+    String hexadecimalToBinary(String hexStr){
+        int decimal = hexToDecimal(hexStr);
+        return decimalToBinary(decimal);
+    }
+
+    String hexadecimalToOctal(String hexStr){
+        int decimal = hexToDecimal(hexStr);
+        return decimalToOctal(decimal);
+    }
+
+    String hexadecimalToDecimal(String hexStr){
+        int decimal = hexToDecimal(hexStr);
+        return Integer.toString(decimal);
+    }
+}

@@ -1,0 +1,27 @@
+import java.util.*;
+public class Pratical4short{
+    public static void main(String[] args) {
+        Pratical4short object = new Pratical4short();
+        System.out.print(object.getShort(32771));
+    }
+
+        int getShort(int number){
+        int answer;
+        int temp = number/32768;
+
+        if(number == -32768){
+            number = -number;
+        }
+            if (temp % 2 == 0) {
+                answer = number%32768;
+            }else{
+                if(number>0){
+                    answer = -32768+number%32768;
+                }else{
+                    answer = 32768 + number%32768;
+                }
+            }
+        return answer;
+        }
+
+}

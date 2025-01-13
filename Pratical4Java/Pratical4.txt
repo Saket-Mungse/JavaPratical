@@ -1,0 +1,79 @@
+import java.util.*;
+
+class Pratical4{
+    public static void main(String[] args) {
+        Pratical4 object = new Pratical4();
+        System.out.println(object.getNumber(128,"ByTe"));
+    }
+
+
+//WITHOUT USING IN-BUILT METHOD
+
+/*   int getNumber(int number,String type){
+        if(type=="Byte" || type=="byte" || type=="BYTE"){
+            return getByte(number);
+        }
+        if(type == "Short" || type=="short" || type=="SHORT"){
+            return getShort(number);
+        }
+        return 0;
+    }*/
+
+
+
+
+// WITH USING IN-BUILT METHOD
+
+   int getNumber(int number,String type){
+    if(type.equalsIgnoreCase("Byte")){
+        return getByte(number);
+    }
+    if(type.equalsIgnoreCase("Short")){
+        return getShort(number);
+    }
+    return 0;
+   }
+
+
+
+
+    int getByte(int number){
+        int answer;
+        int temp = number/128;
+
+        if(number == -128){
+            number = -number;
+        }
+        if (temp % 2 == 0) {
+            answer = number%128;
+        }else{
+            if(number>0){
+                answer = -128+number%128;
+            }else{
+                answer = 128 + number%128;
+            }
+        }
+        return answer;
+    }
+
+    int getShort(int number){
+        int answer;
+        int temp = number/32768;
+
+        if(number == -32768){
+            number = -number;
+        }
+        if (temp % 2 == 0) {
+            answer = number%32768;
+        }else{
+            if(number>0){
+                answer = -32768+number%32768;
+            }else{
+                answer = 32768 + number%32768;
+            }
+        }
+        return answer;
+
+    }
+
+}

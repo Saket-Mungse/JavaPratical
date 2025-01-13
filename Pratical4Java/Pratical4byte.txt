@@ -1,0 +1,27 @@
+import java.util.*;
+public class Pratical4byte{
+    public static void main(String[] args) {
+        Pratical4byte object = new Pratical4byte();
+        System.out.print(object.getByte(129));
+    }
+
+    int getByte(int number){
+        int answer;
+        int temp = number/128;
+
+        if(number == -128){
+            number = -number;
+        }
+        if (temp % 2 == 0) {
+            answer = number%128;
+        }else{
+            if(number>0){
+                answer = -128+number%128;
+            }else{
+                answer = 128 + number%128;
+            }
+        }
+        return answer;
+    }
+
+}
